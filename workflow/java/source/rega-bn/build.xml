@@ -1,0 +1,186 @@
+<project name="rega-bn" default="all" basedir=".">
+  <description>
+    build file for rega-bn 
+  </description>
+  <import file="../common.xml"/>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist" location="dist"/>
+  <property name="proj.name" value="rega-bn"/>
+  <property name="proj.version" value="0.1"/>
+	
+  <target name="init" depends="clean">
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+    <mkdir dir="${dist}"/>
+  </target>
+
+  <target name="compile" description="compile the source" depends="init" >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac target="1.5" debug="on" srcdir="${src}" destdir="${build}">
+  		<classpath refid="project.classpath"/>
+    </javac>
+  </target>
+
+  <target name="dist" description="Make jar file" depends="compile" >
+    <!-- Put everything in ${build} into the jar file -->
+    <jar jarfile="${dist}/csv_to_sql.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.CsvToSql"/>
+  	<attribute name="Class-Path" value="opencsv-2.3.jar"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/fasta_to_nexus.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.fasta.FastaToNexus"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/paup_exclude_rule.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.paup.PaupExcludeRuleFromResistancePositions"/>
+    <attribute name="Class-Path" value="opencsv-2.3.jar"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/codon_statistics.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.fasta.CodonStatistics"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/grep_fasta_label.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.fasta.GrepFastaLabel"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/select_sequences_in_region.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.aa_table.SelectSequencesInRegion"/>
+      <attribute name="Class-Path" value="opencsv-2.3.jar"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/bnetannotate.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.bn.DrugBNetAnnotate"/>
+      <attribute name="Class-Path" value="bnj.jar rega-csv.jar openjgraph.jar"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/fix_bn_variable_names.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.bn.FixBNVariableNames"/>
+      <attribute name="Class-Path" value="bnj.jar openjgraph.jar"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/bn_csv_predict.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.bn.BNCsvPredict"/>
+      <attribute name="Class-Path" value="rega-csv.jar"/>
+      </manifest>
+    </jar>
+  	<jar jarfile="${dist}/bool_table_to_aa_table.jar" basedir="${build}">
+  	      <manifest>
+  	  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.csv.BoolTableToAATable"/>
+  	      <attribute name="Class-Path" value="rega-csv.jar"/>
+  	      </manifest>
+  	</jar>
+  	<jar jarfile="${dist}/confusion_matrix.jar" basedir="${build}">
+  	      <manifest>
+  	  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.statistics.ConfusionMatrix"/>
+  	      <attribute name="Class-Path" value="rega-csv.jar"/>
+  	      </manifest>
+  	</jar>
+  	
+    <jar jarfile="${dist}/cut_region.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.aa_table.CutRegion"/>
+      <attribute name="Class-Path" value="opencsv-2.3.jar"/>
+      </manifest>
+    </jar>
+  	
+    <jar jarfile="${dist}/remove_mixtures.jar" basedir="${build}">
+      <manifest>
+  		<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.aa_table.RemoveMixtures"/>
+      	<attribute name="Class-Path" value="rega-csv.jar"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/fasta_to_csv.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.fasta.FastaToCsv"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/cut_region_from_fasta.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.fasta.CutRegionFromFasta"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/consensus_network.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.bn.ConsensusNetwork"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/drop_column.jar" basedir="${build}">
+      <manifest>
+      	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.csv.DropColumn"/>
+      	<attribute name="Class-Path" value="opencsv-2.3.jar"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/remove_wildtype_from_binary_positions.jar" basedir="${build}">
+      <manifest>
+  		<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.aa_table.RemoveWildtypeFromBinaryPositions"/>
+      	<attribute name="Class-Path" value="rega-csv.jar"/>
+      </manifest>
+    </jar>
+    <jar jarfile="${dist}/csv_to_vd.jar" basedir="${build}">
+       <manifest>
+   		<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.csv.CsvToVd"/>
+       	<attribute name="Class-Path" value="rega-csv.jar"/>
+       </manifest>
+    </jar>
+    <jar jarfile="${dist}/csv_to_idt.jar" basedir="${build}">
+       <manifest>
+   		<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.csv.CsvToIdt"/>
+       	<attribute name="Class-Path" value="rega-csv.jar"/>
+       </manifest>
+    </jar>
+  	
+    <jar jarfile="${dist}/boolean_table_to_fcm_format.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.fcm.BooleanTableToFcmFormat"/>
+      <attribute name="Class-Path" value="opencsv-2.3.jar"/>
+      </manifest>
+    </jar>
+  	
+    <jar jarfile="${dist}/aa_table_to_fcm_format.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.fcm.AATableToFcmFormat"/>
+      <attribute name="Class-Path" value="opencsv-2.3.jar"/>
+      </manifest>
+    </jar>
+  	
+    <jar jarfile="${dist}/get_first_nucleotide.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.fasta.GetFirstNucleotide"/>
+      </manifest>
+    </jar>
+  	
+    <jar jarfile="${dist}/get_last_nucleotide.jar" basedir="${build}">
+      <manifest>
+  	<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.fasta.GetLastNucleotide"/>
+      </manifest>
+    </jar>
+  	
+  	<jar jarfile="${dist}/boolean_to_position_vars.jar" basedir="${build}">
+	    <manifest>
+			<attribute name="Main-Class" value="be.kuleuven.rega.cev.tools.csv.vars.BooleanVarsToPositionVars"/>
+	    	<attribute name="Class-Path" value="rega-csv.jar"/>
+	    </manifest>
+ 	</jar>
+  </target>
+  
+  <!-- Clean up -->
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+
+  <target name="all" description="Do the build" depends="dist" />
+</project>
