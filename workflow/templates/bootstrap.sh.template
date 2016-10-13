@@ -1,0 +1,3 @@
+#!/bin/bash
+
+{commands_dir}/get_bootstrap_support.sh {bootstrap_dir} $1 $2
