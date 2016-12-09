@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#TODO check that there are no illegal values in the col names of
+#     bn_table.csv 
+#     check using RE ([A-Z]+)([0-9]+)([A-Z*])
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 . ${DIR}/settings.sh
